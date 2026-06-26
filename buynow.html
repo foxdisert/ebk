@@ -1,0 +1,390 @@
+<style>
+  .msr-pricing-wrap,
+  .msr-pricing-wrap * {
+    box-sizing: border-box !important;
+  }
+  .msr-pricing-wrap {
+    background: #0a0a0a !important;
+    color: #fff !important;
+    font-family: inherit !important;
+    padding: 60px 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    display: block !important;
+    margin: 0 !important;
+  }
+  .msr-pricing-inner {
+    max-width: 1320px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 24px !important;
+  }
+  .msr-pricing-header { text-align: center; margin-bottom: 32px; }
+  .msr-pricing-badge {
+    display: inline-block;
+    background: rgba(158,240,26,0.12);
+    color: #9EF01A;
+    font-size: 11px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(158,240,26,0.3);
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .msr-pricing-title { font-size: 36px !important; font-weight: 700 !important; margin: 0 0 10px !important; color: #fff !important; line-height: 1.2 !important; }
+  .msr-pricing-title span { color: #9EF01A !important; }
+  .msr-pricing-sub { font-size: 15px; color: #aaa; margin: 0 auto; max-width: 600px; }
+  .msr-toggle-wrap { display: flex; justify-content: center; margin: 28px 0 48px; }
+  .msr-toggle {
+    display: inline-flex;
+    background: #1a1a1a;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 999px;
+    padding: 5px;
+    gap: 4px;
+  }
+  .msr-toggle-btn {
+    background: transparent;
+    color: #888;
+    border: none;
+    padding: 11px 28px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .msr-toggle-btn.active { background: #9EF01A !important; color: #0a0a0a !important; }
+  .msr-toggle-btn:hover:not(.active) { color: #fff; }
+  .msr-cards {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 20px !important;
+    width: 100% !important;
+    align-items: start;
+  }
+  .msr-card {
+    background: #111 !important;
+    border: 1px solid #222 !important;
+    border-radius: 14px !important;
+    padding: 28px 22px 24px !important;
+    position: relative;
+    transition: all 0.2s;
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+  .msr-card:hover { border-color: rgba(158,240,26,0.3) !important; transform: translateY(-3px); }
+  .msr-card.featured {
+    background: #9EF01A !important;
+    border-color: #9EF01A !important;
+    color: #0a0a0a !important;
+    transform: scale(1.04);
+    padding-top: 36px !important;
+  }
+  .msr-card.featured:hover { transform: scale(1.04) translateY(-3px); }
+  .msr-card-popular {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #0a0a0a;
+    color: #9EF01A;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 999px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid #9EF01A;
+    white-space: nowrap;
+    z-index: 2;
+  }
+  .msr-card-savings-wrap { text-align: center; margin-bottom: 12px; }
+  .msr-card-savings {
+    background: rgba(0,0,0,0.18);
+    color: #0a0a0a;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 4px;
+    display: inline-block;
+    letter-spacing: 0.5px;
+  }
+  .msr-card-duration {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+  }
+  .msr-card.featured .msr-card-duration { color: rgba(0,0,0,0.7); }
+  .msr-card-price { text-align: center; margin-bottom: 4px; }
+  .msr-card-price .currency {
+    font-size: 22px;
+    font-weight: 600;
+    vertical-align: top;
+    line-height: 1.6;
+    color: #fff;
+  }
+  .msr-card-price .amount {
+    font-size: 44px !important;
+    font-weight: 800 !important;
+    color: #fff !important;
+    letter-spacing: -1px;
+  }
+  .msr-card-price .cents {
+    font-size: 22px;
+    font-weight: 600;
+    vertical-align: top;
+    line-height: 1.6;
+    color: #fff;
+  }
+  .msr-card.featured .msr-card-price .currency,
+  .msr-card.featured .msr-card-price .amount,
+  .msr-card.featured .msr-card-price .cents { color: #0a0a0a !important; }
+  .msr-card-permonth {
+    text-align: center;
+    font-size: 13px;
+    color: #9EF01A;
+    font-weight: 600;
+    margin-bottom: 6px;
+    height: 18px;
+    line-height: 18px;
+  }
+  .msr-card.featured .msr-card-permonth { color: #0a0a0a; }
+  .msr-card-strike {
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 18px;
+    height: 32px;
+    line-height: 1.4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8px;
+  }
+  .msr-card-strike s { color: #888; }
+  .msr-card.featured .msr-card-strike { color: rgba(0,0,0,0.6); }
+  .msr-card.featured .msr-card-strike s { color: rgba(0,0,0,0.5); }
+  .msr-card-features {
+    list-style: none !important;
+    padding: 18px 0 0 !important;
+    margin: 0 0 22px !important;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .msr-card.featured .msr-card-features { border-top-color: rgba(0,0,0,0.15); }
+  .msr-card-features li {
+    font-size: 13px;
+    color: #ccc;
+    padding: 6px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.4;
+    list-style: none !important;
+  }
+  .msr-card-features li::before {
+    content: "";
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: rgba(158,240,26,0.15);
+    display: inline-flex;
+    flex-shrink: 0;
+    margin-top: 1px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%239EF01A'><path d='M6.5 11L3 7.5 4.4 6.1 6.5 8.2 11.6 3 13 4.4z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .msr-card-features li.exclusive {
+    color: #fff;
+    font-weight: 600;
+  }
+  .msr-card-features li.exclusive::before {
+    background-color: rgba(158,240,26,0.25);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%239EF01A'><path d='M8 1l2 4.5 5 .5-3.7 3.4 1 5-4.3-2.4-4.3 2.4 1-5L1 6l5-.5z'/></svg>");
+  }
+  .msr-card.featured .msr-card-features li { color: rgba(0,0,0,0.85) !important; }
+  .msr-card.featured .msr-card-features li.exclusive { color: #0a0a0a !important; }
+  .msr-card.featured .msr-card-features li::before {
+    background-color: rgba(0,0,0,0.12);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%230a0a0a'><path d='M6.5 11L3 7.5 4.4 6.1 6.5 8.2 11.6 3 13 4.4z'/></svg>");
+  }
+  .msr-card.featured .msr-card-features li.exclusive::before {
+    background-color: rgba(0,0,0,0.2);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%230a0a0a'><path d='M8 1l2 4.5 5 .5-3.7 3.4 1 5-4.3-2.4-4.3 2.4 1-5L1 6l5-.5z'/></svg>");
+  }
+  .msr-card-cta {
+    display: block !important;
+    width: 100% !important;
+    background: #1a1a1a !important;
+    color: #fff !important;
+    border: 1px solid rgba(255,255,255,0.15) !important;
+    padding: 13px !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .msr-card-cta:hover {
+    background: #9EF01A !important;
+    color: #0a0a0a !important;
+    border-color: #9EF01A !important;
+  }
+  .msr-card.featured .msr-card-cta {
+    background: #0a0a0a !important;
+    color: #9EF01A !important;
+    border-color: #0a0a0a !important;
+  }
+  .msr-card.featured .msr-card-cta:hover {
+    background: #fff !important;
+    color: #0a0a0a !important;
+    border-color: #fff !important;
+  }
+  .msr-card-ready {
+    text-align: center;
+    font-size: 11px;
+    color: #666;
+    margin-top: 10px;
+  }
+  .msr-card.featured .msr-card-ready { color: rgba(0,0,0,0.6); }
+  .msr-trial-line { text-align: center; margin-top: 32px; font-size: 14px; color: #aaa; }
+  .msr-trial-line a { color: #9EF01A !important; font-weight: 600; text-decoration: none !important; }
+  .msr-trial-line a:hover { text-decoration: underline !important; }
+
+  @media (max-width: 1100px) {
+    .msr-cards { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 16px !important; }
+    .msr-card.featured { transform: scale(1) !important; }
+    .msr-card.featured:hover { transform: translateY(-3px) !important; }
+  }
+  @media (max-width: 600px) {
+    .msr-pricing-wrap { padding: 40px 0 !important; }
+    .msr-pricing-inner { padding: 0 16px !important; }
+    .msr-pricing-title { font-size: 26px !important; }
+    .msr-cards { grid-template-columns: 1fr !important; gap: 14px !important; }
+    .msr-toggle-btn { padding: 10px 22px !important; font-size: 13px !important; }
+  }
+</style>
+
+<section class="msr-pricing-wrap" id="pricing">
+  <div class="msr-pricing-inner">
+    <div class="msr-pricing-header">
+      <div class="msr-pricing-badge">Choose your plan</div>
+      <h2 class="msr-pricing-title">Simple <span>pricing</span>, no hidden fees</h2>
+      <p class="msr-pricing-sub">All plans include thousands of channels and movies. Premium adds 4K, more devices, and exclusive content.</p>
+    </div>
+
+    <div class="msr-toggle-wrap">
+      <div class="msr-toggle">
+        <button class="msr-toggle-btn active" data-plan="premium" type="button">Premium 8K</button>
+        <button class="msr-toggle-btn" data-plan="basic" type="button">Basic HD</button>
+      </div>
+    </div>
+
+    <div class="msr-cards" id="msr-cards"></div>
+
+    <p class="msr-trial-line">Not sure yet? <a href="https://morsar.link/24h-premium-subscription/">Try 24 hours trial</a>.</p>
+  </div>
+</section>
+
+<script>
+(function() {
+  
+  var premiumFeatures = [
+    { text: 'HD, FHD, 4K & 8K quality', exclusive: true },
+    { text: '+39,000 channels with EPG', exclusive: true },
+    { text: '+270,000 movies & series', exclusive: true },
+    { text: 'PPV events & VIP channels', exclusive: true },
+    { text: 'Add extra connections at checkout', exclusive: false },
+    { text: 'Antifreeze technology', exclusive: false },
+    { text: '99.9% server uptime', exclusive: false },
+    { text: '10-day money back', exclusive: false },
+    { text: '24/7 priority support', exclusive: false }
+  ];
+  var basicFeatures = [
+    { text: 'SD, HD & FHD quality', exclusive: false },
+    { text: '+21,000 channels with EPG', exclusive: false },
+    { text: '+100,000 movies & series', exclusive: false },
+    { text: 'Standard channels only', exclusive: false },
+    { text: 'Add extra connections at checkout', exclusive: false },
+    { text: 'Antifreeze technology', exclusive: false },
+    { text: '99.9% server uptime', exclusive: false },
+    { text: '10-day money back', exclusive: false },
+    { text: '24/7 support', exclusive: false }
+  ];
+
+  var plans = {
+        premium: [
+      { duration: '1 Month', months: 1, price: 19.99, popular: false, features: premiumFeatures, link: 'https://morsar.pocketsflow.com/premium-1-volume' },
+      { duration: '3 Months', months: 3, price: 45.99, popular: false, features: premiumFeatures, link: 'https://morsar.link/3-months-premium-subscription/' },
+      { duration: '12 Months', months: 12, price: 99.99, popular: true, features: premiumFeatures, link: 'https://morsar.link/12-months-premium-subscription/' },
+      { duration: '6 Months', months: 6, price: 75.99, popular: false, features: premiumFeatures, link: 'https://morsar.link/6-months-premium-subscription/' }
+    ],
+    basic: [
+      { duration: '1 Month', months: 1, price: 12.99, popular: false, features: basicFeatures, link: 'https://morsar.link/1-month-basic-subscription/' },
+      { duration: '3 Months', months: 3, price: 19.99, popular: false, features: basicFeatures, link: 'https://morsar.link/3-months-basic-subscription/' },
+      { duration: '12 Months', months: 12, price: 49.99, popular: true, features: basicFeatures, link: 'https://morsar.link/12-months-basic-subscription/' },
+      { duration: '6 Months', months: 6, price: 29.99, popular: false, features: basicFeatures, link: 'https://morsar.link/6-months-basic-subscription/' }
+    ]
+  };
+
+  function render(planKey) {
+    var data = plans[planKey];
+    var monthly1 = data[0].price;
+    var html = data.map(function(p) {
+      var perMonth = (p.price / p.months).toFixed(2);
+      var fullPriceAtMonthly = monthly1 * p.months;
+      var savingsPct = p.months > 1 ? Math.round((1 - p.price / fullPriceAtMonthly) * 100) : 0;
+      var popularBadge = p.popular ? '<div class="msr-card-popular">Most Popular</div>' : '';
+      var savingsBadge = p.popular && savingsPct > 0
+        ? '<div class="msr-card-savings-wrap"><span class="msr-card-savings">Save ' + savingsPct + '%</span></div>'
+        : '';
+      var priceParts = p.price.toFixed(2).split('.');
+      var perMonthLine = p.months > 1
+        ? '<div class="msr-card-permonth">$' + perMonth + '/month</div>'
+        : '<div class="msr-card-permonth">&nbsp;</div>';
+      var strikeHtml = p.months > 1
+        ? '<div class="msr-card-strike"><span><s>$' + fullPriceAtMonthly.toFixed(2) + '</s> billed every ' + p.months + ' months</span></div>'
+        : '<div class="msr-card-strike"><span>Billed monthly</span></div>';
+      var extraAttrs = p.attrs ? ' ' + p.attrs : '';
+      // Route every Buy Now click through the ebook site so the checkout sees
+      // ebookmorsar.online as the traffic source (referrer + utm_source).
+      var checkoutUrl = 'https://ebookmorsar.online/go.html?to=' + encodeURIComponent(p.link);
+      var features = p.features.map(function(f) {
+        return '<li' + (f.exclusive ? ' class="exclusive"' : '') + '>' + f.text + '</li>';
+      }).join('');
+      return '<div class="msr-card' + (p.popular ? ' featured' : '') + '">' +
+        popularBadge +
+        savingsBadge +
+        '<div class="msr-card-duration">' + p.duration + '</div>' +
+        '<div class="msr-card-price"><span class="currency">$</span><span class="amount">' + priceParts[0] + '</span><span class="cents">.' + priceParts[1] + '</span></div>' +
+        perMonthLine +
+        strikeHtml +
+        '<ul class="msr-card-features">' + features + '</ul>' +
+        '<a href="' + checkoutUrl + '" class="msr-card-cta"' + extraAttrs + '>Buy Now</a>' +
+        '<div class="msr-card-ready">Ready within 5-7 mins</div>' +
+      '</div>';
+    }).join('');
+    document.getElementById('msr-cards').innerHTML = html;
+  }
+
+  document.querySelectorAll('.msr-toggle-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.msr-toggle-btn').forEach(function(b) { b.classList.remove('active'); });
+      this.classList.add('active');
+      render(this.dataset.plan);
+    });
+  });
+
+  render('premium');
+})();
+</script>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Make sure this page's origin (ebookmorsar.online) is sent as the referrer to the checkout -->
+  <meta name="referrer" content="origin">
+  <title>Redirecting…</title>
+  <style>
+    html,body{height:100%;margin:0;background:#0a0a0a;color:#fff;font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;}
+    .wrap{height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;text-align:center;padding:24px;}
+    .spin{width:42px;height:42px;border:3px solid rgba(158,240,26,.2);border-top-color:#9EF01A;border-radius:50%;animation:s .8s linear infinite;}
+    @keyframes s{to{transform:rotate(360deg)}}
+    p{color:#aaa;font-size:15px;margin:0}
+    a{color:#9EF01A}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="spin"></div>
+    <p>Taking you to secure checkout…</p>
+    <p><a id="manual" href="#">Click here if you are not redirected</a></p>
+  </div>
+  <script>
+    (function () {
+      // Allow-list of checkout domains we are willing to forward to (prevents open-redirect abuse).
+      var ALLOWED = ['morsar.pocketsflow.com', 'morsar.link'];
+
+      var params = new URLSearchParams(window.location.search);
+      var to = params.get('to');
+      var fallback = 'https://ebookmorsar.online/';
+
+      function isAllowed(url) {
+        try {
+          var h = new URL(url).hostname.replace(/^www\./, '');
+          return ALLOWED.some(function (d) { return h === d || h.endsWith('.' + d); });
+        } catch (e) { return false; }
+      }
+
+      var dest = (to && isAllowed(to)) ? to : fallback;
+
+      // Tag the destination so the source is also recorded via UTM (belt + suspenders).
+      try {
+        var u = new URL(dest);
+        if (!u.searchParams.has('utm_source')) u.searchParams.set('utm_source', 'ebookmorsar.online');
+        if (!u.searchParams.has('utm_medium')) u.searchParams.set('utm_medium', 'buynow');
+        dest = u.toString();
+      } catch (e) {}
+
+      document.getElementById('manual').href = dest;
+      // replace() so the bridge does not sit in the browser history (back button skips it).
+      window.location.replace(dest);
+    })();
+  </script>
+</body>
+</html>
